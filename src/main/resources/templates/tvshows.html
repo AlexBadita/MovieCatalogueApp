@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>TV Shows</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+</head>
+<body>
+<div th:replace="navbar :: nav"></div>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th scope="col">Name</th>
+    <th scope="col">Release Year</th>
+    <th scope="col">Genre</th>
+    <th scope="col">Language</th>
+    <th scope="col">Seasons</th>
+    <th scope="col">Episodes</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:if="${tvshows.empty}">
+    <td colspan="2"> No TV Shows Available </td>
+  </tr>
+  <tr th:each="tvshow : ${tvshows}">
+    <td th:text="${tvshow.name}"></td>
+    <td th:text="${tvshow.releaseYear}"></td>
+    <td th:text="${tvshow.genre}"></td>
+    <td th:text="${tvshow.language}"></td>
+    <td th:text="${tvshow.seasons}"></td>
+    <td th:text="${tvshow.episodes}"></td>
+  </tr>
+  </tbody>
+</table>
+
+<a th:href="@{/addtvshow}" class="btn btn-dark" role="button">
+  Add tv show
+</a>
+</body>
+</html>
