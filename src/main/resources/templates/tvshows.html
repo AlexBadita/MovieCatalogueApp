@@ -17,6 +17,7 @@
     <th scope="col">Language</th>
     <th scope="col">Seasons</th>
     <th scope="col">Episodes</th>
+    <th scope="col">Actions</th>
   </tr>
   </thead>
   <tbody>
@@ -26,10 +27,14 @@
   <tr th:each="tvshow : ${tvshows}">
     <td th:text="${tvshow.name}"></td>
     <td th:text="${tvshow.releaseYear}"></td>
-    <td th:text="${tvshow.genre}"></td>
-    <td th:text="${tvshow.language}"></td>
+    <td th:text="${tvshow.genre.name}"></td>
+    <td th:text="${tvshow.language.name}"></td>
     <td th:text="${tvshow.seasons}"></td>
     <td th:text="${tvshow.episodes}"></td>
+    <td>
+      <a th:href="@{/updatetvshow/{id}(id=${tvshow.id})}" class="btn btn-primary">Update</a>
+      <a th:href="@{/deletetvshow/{id}(id=${tvshow.id})}" class="btn btn-danger">Delete</a>
+    </td>
   </tr>
   </tbody>
 </table>

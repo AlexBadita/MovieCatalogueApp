@@ -1,11 +1,9 @@
 package ro.digitalnation.moviecatalogue.Models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class CatalogueEntry {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,19 +13,23 @@ public abstract class CatalogueEntry {
 
     private Integer releaseYear;
 
-    private Integer genreId;
+    @ManyToOne
+    @JoinColumn(name = "genreId")
+    private Genre genre;
 
-    private Integer languageId;
+    @ManyToOne
+    @JoinColumn(name = "languageId")
+    private Language language;
 
     private String about;
 
     public CatalogueEntry() {}
 
-    public CatalogueEntry(String name, Integer releaseYear, Integer genreId, Integer languageId, String about) {
+    public CatalogueEntry(String name, Integer releaseYear, Genre genre, Language language, String about) {
         this.name = name;
         this.releaseYear = releaseYear;
-        this.genreId = genreId;
-        this.languageId = languageId;
+        this.genre = genre;
+        this.language = language;
         this.about = about;
     }
 
@@ -55,20 +57,20 @@ public abstract class CatalogueEntry {
         this.releaseYear = releaseYear;
     }
 
-    public Integer getGenreId() {
-        return genreId;
+    public Genre getGenre() {
+        return genre;
     }
 
-    public void setGenreId(Integer genreId) {
-        this.genreId = genreId;
+    public void setGenre(Genre genre) {
+        this.genre = genre;
     }
 
-    public Integer getLanguageId() {
-        return languageId;
+    public Language getLanguage() {
+        return language;
     }
 
-    public void setLanguageId(Integer languageId) {
-        this.languageId = languageId;
+    public void setLanguage(Language language) {
+        this.language = language;
     }
 
     public String getAbout() {

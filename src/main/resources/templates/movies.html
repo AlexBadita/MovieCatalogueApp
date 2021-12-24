@@ -15,7 +15,8 @@
           <th scope="col">Release Year</th>
           <th scope="col">Genre</th>
           <th scope="col">Language</th>
-          <th scope="col">Duration</th>
+          <th scope="col">Duration (min)</th>
+            <th scope="col">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -25,9 +26,13 @@
         <tr th:each="movie : ${movies}">
           <td th:text="${movie.name}"></td>
           <td th:text="${movie.releaseYear}"></td>
-          <td th:text="${movie.genreId}"></td>
-          <td th:text="${movie.languageId}"></td>
+          <td th:text="${movie.genre.name}"></td>
+          <td th:text="${movie.language.name}"></td>
           <td th:text="${movie.duration}"></td>
+            <td>
+                <a th:href="@{/updatemovie/{id}(id=${movie.id})}" class="btn btn-primary">Update</a>
+                <a th:href="@{/deletemovie/{id}(id=${movie.id})}" class="btn btn-danger">Delete</a>
+            </td>
         </tr>
       </tbody>
     </table>

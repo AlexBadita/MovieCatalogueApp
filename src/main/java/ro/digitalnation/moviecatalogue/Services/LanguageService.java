@@ -21,11 +21,7 @@ public class LanguageService {
         return languageRepository.findById(id).get();
     }
 
-    public void addLanguage(Language language){
-        languageRepository.save(language);
-    }
-
-    public void updateLanguage(Language language){
+    public void saveLanguage(Language language){
         languageRepository.save(language);
     }
 

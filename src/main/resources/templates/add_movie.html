@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Movie</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+</head>
+<body>
+<div th:replace="navbar :: nav"></div>
+
+<form th:action="@{/savemovie}" th:object="${movie}" method="post">
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control col-sm-2" id="name" placeholder="Insert Name" th:field="${movie.name}">
+  </div>
+    <div class="form-group">
+        <label for="releaseYear">Release Year</label>
+        <input type="number" class="form-control col-sm-2" id="releaseYear" placeholder="Insert Release Year" th:field="${movie.releaseYear}">
+    </div>
+    <div class="form-group">
+        <label for="genre">Genre</label>
+        <select class="form-control col-sm-2" id="genre" th:field="${movie.genre}">
+            <th:block th:each="genreItem : ${genres}">
+                <option th:text="${genreItem.name}" th:value="${genreItem.id}"/>
+            </th:block>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="language">Language</label>
+        <select class="form-control col-sm-2" id="language" th:field="${movie.language}">
+            <th:block th:each="languageItem : ${languages}">
+                <option th:text="${languageItem.name}" th:value="${languageItem.id}"/>
+            </th:block>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="about">About</label>
+        <textarea class="form-control col-sm-4" rows="5" id="about" placeholder="Insert About" th:field="${movie.about}"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="duration">Duration (min)</label>
+        <input type="number" class="form-control col-sm-2" id="duration" placeholder="Insert Duration (min)" th:field="${movie.duration}">
+    </div>
+    <button type="submit" class="btn btn-dark">Save</button>
+</form>
+</body>
+</html>

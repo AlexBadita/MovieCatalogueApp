@@ -14,8 +14,8 @@ public class Movie extends CatalogueEntry {
         this.duration = duration;
     }
 
-    public Movie(String name, Integer releaseYear, Integer genreId, Integer languageId, String about, Integer duration) {
-        super(name, releaseYear, genreId, languageId, about);
+    public Movie(String name, Integer releaseYear, Genre genre, Language language, String about, Integer duration) {
+        super(name, releaseYear, genre, language, about);
         this.duration = duration;
     }
 

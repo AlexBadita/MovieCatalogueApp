@@ -3,12 +3,12 @@ package ro.digitalnation.moviecatalogue.Controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import ro.digitalnation.moviecatalogue.Models.Movie;
+import org.springframework.web.bind.annotation.*;
+import ro.digitalnation.moviecatalogue.Models.Genre;
+import ro.digitalnation.moviecatalogue.Models.Language;
 import ro.digitalnation.moviecatalogue.Models.TVShow;
+import ro.digitalnation.moviecatalogue.Services.GenreService;
+import ro.digitalnation.moviecatalogue.Services.LanguageService;
 import ro.digitalnation.moviecatalogue.Services.TVShowService;
 
 import java.util.List;
@@ -18,6 +18,12 @@ public class TVShowController {
 
     @Autowired
     private TVShowService tvShowService;
+
+    @Autowired
+    private LanguageService languageService;
+
+    @Autowired
+    private GenreService genreService;
 
     @RequestMapping("/tvshows")
     public String getAllTVShows(Model model){
@@ -32,18 +38,39 @@ public class TVShowController {
     }
 
     @RequestMapping("/addtvshow")
-    public String addTVShow(@RequestBody TVShow tvShow){
-        tvShowService.addTVShow(tvShow);
-        return "addtvshow";
+    public String addTVShow(Model model){
+        List<Genre> genres = genreService.getAllGenres();
+        List<Language> languages = languageService.getAllLanguages();
+
+        model.addAttribute("tvshow", new TVShow());
+        model.addAttribute("genres", genres);
+        model.addAttribute("languages", languages);
+
+        return "add_tvshow";
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/tvshows/{id}")
-    public void updateTVShow(@RequestBody TVShow tvShow, @PathVariable Integer id){
-        tvShowService.updateTVShow(tvShow);
+    @PostMapping("/savetvshow")
+    public String createTVShow(@ModelAttribute("tvshow") TVShow tvShow){
+        tvShowService.saveTVShow(tvShow);
+        return "redirect:/tvshows";
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/tvshows/{id}")
-    public void deleteTVShow(@PathVariable Integer id){
+    @RequestMapping("/updatetvshow/{id}")
+    public String updateTVShow(@PathVariable(value = "id") Integer id, Model model){
+        TVShow tvShow = tvShowService.getTVShow(id);
+        model.addAttribute("tvshow", tvShow);
+
+        List<Genre> genres = genreService.getAllGenres();
+        List<Language> languages = languageService.getAllLanguages();
+        model.addAttribute("genres", genres);
+        model.addAttribute("languages", languages);
+
+        return "update_tvshow";
+    }
+
+    @RequestMapping("/deletetvshow/{id}")
+    public String deleteTVShow(@PathVariable(value = "id") Integer id){
         tvShowService.deleteTVShow(id);
+        return "redirect:/tvshows";
     }
 }

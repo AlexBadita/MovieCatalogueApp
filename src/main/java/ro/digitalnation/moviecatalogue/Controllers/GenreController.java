@@ -3,14 +3,9 @@ package ro.digitalnation.moviecatalogue.Controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import ro.digitalnation.moviecatalogue.Models.Genre;
-import ro.digitalnation.moviecatalogue.Models.Movie;
 import ro.digitalnation.moviecatalogue.Services.GenreService;
-import ro.digitalnation.moviecatalogue.Services.MovieService;
 
 import java.util.List;
 
@@ -32,18 +27,28 @@ public class GenreController {
         return genreService.getGenre(id);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/genres/addgenre")
-    public void addGenre(@RequestBody Genre genre){
-        genreService.addGenre(genre);
+    @RequestMapping("/addgenre")
+    public String addGenre(Model model){
+        model.addAttribute("genre", new Genre());
+        return "add_genre";
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/genres/update/{id}")
-    public void updateGenre(@RequestBody Genre genre, @PathVariable Integer id){
-        genreService.updateGenre(genre);
+    @PostMapping("/savegenre")
+    public String createGenre(@ModelAttribute("genre") Genre genre){
+        genreService.saveGenre(genre);
+        return "redirect:/genres";
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/genres/delete/{id}")
-    public void deleteGenre(@PathVariable Integer id){
+    @RequestMapping("/updategenre/{id}")
+    public String updateGenre(@PathVariable(value = "id") Integer id, Model model){
+        Genre genre = genreService.getGenre(id);
+        model.addAttribute("genre", genre);
+        return "update_genre";
+    }
+
+    @RequestMapping("/deletegenre/{id}")
+    public String deleteGenre(@PathVariable(value = "id") Integer id){
         genreService.deleteGenre(id);
+        return "redirect:/genres";
     }
 }

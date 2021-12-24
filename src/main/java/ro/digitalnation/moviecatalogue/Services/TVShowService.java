@@ -21,11 +21,7 @@ public class TVShowService {
         return tvShowRepository.findById(id).get();
     }
 
-    public void addTVShow(TVShow tvShow){
-        tvShowRepository.save(tvShow);
-    }
-
-    public void updateTVShow(TVShow tvShow){
+    public void saveTVShow(TVShow tvShow){
         tvShowRepository.save(tvShow);
     }
 

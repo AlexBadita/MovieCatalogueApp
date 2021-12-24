@@ -1,7 +1,5 @@
 package ro.digitalnation.moviecatalogue.Models;
 
-import ro.digitalnation.moviecatalogue.Models.CatalogueEntry;
-
 import javax.persistence.*;
 
 @Entity
@@ -19,8 +17,8 @@ public class TVShow extends CatalogueEntry {
         this.episodes = episodes;
     }
 
-    public TVShow(String name, Integer releaseYear, Integer genreId, Integer languageId, String about, Integer seasons, Integer episodes) {
-        super(name, releaseYear, genreId, languageId, about);
+    public TVShow(String name, Integer releaseYear, Genre genre, Language language, String about, Integer seasons, Integer episodes) {
+        super(name, releaseYear, genre, language, about);
         this.seasons = seasons;
         this.episodes = episodes;
     }

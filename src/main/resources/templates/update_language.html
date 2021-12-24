@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Update Language</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+</head>
+<body>
+<div th:replace="navbar :: nav"></div>
+
+<form th:action="@{/savelanguage}" th:object="${language}" method="post">
+  <div class="form-group">
+    <input type="hidden" th:field="${language.id}">
+    <label for="name">Name</label>
+    <input type="text" class="form-control col-sm-2" id="name" th:field="${language.name}">
+  </div>
+  <button type="submit" class="btn btn-dark">Update</button>
+</form>
+</body>
+</html>

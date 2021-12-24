@@ -21,11 +21,7 @@ public class MovieService {
         return movieRepository.findById(id).get();
     }
 
-    public void addMovie(Movie movie){
-        movieRepository.save(movie);
-    }
-
-    public void updateMovie(Movie movie){
+    public void saveMovie(Movie movie){
         movieRepository.save(movie);
     }
 

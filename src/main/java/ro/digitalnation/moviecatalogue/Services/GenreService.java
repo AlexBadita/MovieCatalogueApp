@@ -21,11 +21,7 @@ public class GenreService {
         return genreRepository.findById(id).get();
     }
 
-    public void addGenre(Genre genre){
-        genreRepository.save(genre);
-    }
-
-    public void updateGenre(Genre genre){
+    public void saveGenre(Genre genre){
         genreRepository.save(genre);
     }
 

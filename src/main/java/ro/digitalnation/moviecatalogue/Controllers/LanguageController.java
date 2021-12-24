@@ -3,14 +3,9 @@ package ro.digitalnation.moviecatalogue.Controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import ro.digitalnation.moviecatalogue.Models.Language;
-import ro.digitalnation.moviecatalogue.Models.Movie;
 import ro.digitalnation.moviecatalogue.Services.LanguageService;
-import ro.digitalnation.moviecatalogue.Services.MovieService;
 
 import java.util.List;
 
@@ -32,19 +27,28 @@ public class LanguageController {
         return languageService.getLanguage(id);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/languages/addlanguages")
-    public void addLanguage(@RequestBody Language language){
-        languageService.addLanguage(language);
+    @RequestMapping("/addlanguage")
+    public String addLanguage(Model model){
+        model.addAttribute("language", new Language());
+        return "add_language";
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/languages/update/{id}")
-    public void updateLanguage(@RequestBody Language language, @PathVariable Integer id){
-        languageService.updateLanguage(language);
+    @RequestMapping("/savelanguage")
+    public String saveLanguage(@ModelAttribute("language") Language language){
+        languageService.saveLanguage(language);
+        return "redirect:/languages";
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/languages/delete/{id}")
-    public void deleteLanguage(@PathVariable Integer id){
+    @RequestMapping("/updatelanguage/{id}")
+    public String updateLanguage(@PathVariable(value = "id") Integer id, Model model){
+        Language language = languageService.getLanguage(id);
+        model.addAttribute("language", language);
+        return "update_language";
+    }
 
+    @RequestMapping("/deletelanguage/{id}")
+    public String deleteLanguage(@PathVariable(value = "id") Integer id){
         languageService.deleteLanguage(id);
+        return "redirect:/languages";
     }
 }
